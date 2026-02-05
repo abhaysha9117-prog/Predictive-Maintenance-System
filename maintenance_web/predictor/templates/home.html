@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predictive Maintenance</title>
+</head>
+<body>
+    <h2>Predictive Maintenance System</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        Cycle: <input type="number" step="any" name="cycle"><br><br>
+        Sensor 2: <input type="number" step="any" name="sensor_2"><br><br>
+        Sensor 3: <input type="number" step="any" name="sensor_3"><br><br>
+        Sensor 4: <input type="number" step="any" name="sensor_4"><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <h3>Result: {{ result }}</h3>
+    {% endif %}
+</body>
+</html>

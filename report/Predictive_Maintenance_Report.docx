@@ -1,0 +1,195 @@
+PREDICTIVE MAINTENANCE SYSTEM USING MACHINE LEARNING
+1. Introduction
+
+Predictive maintenance is an advanced maintenance strategy that uses data-driven techniques to predict equipment failures before they occur. Unlike traditional reactive or preventive maintenance, predictive maintenance helps reduce unexpected breakdowns, minimize downtime, and lower maintenance costs.
+
+In modern industries such as manufacturing, aviation, and energy, machines are equipped with multiple sensors that continuously monitor operational conditions. Analyzing this sensor data using machine learning enables early detection of degradation patterns.
+
+Objective of this Project:
+The objective of this project is to develop an end-to-end machine learning–based predictive maintenance system that predicts imminent machine failure using sensor time-series data.
+
+2. Dataset Description
+
+This project uses the NASA C-MAPSS Turbofan Engine Degradation Dataset (FD001).
+
+Dataset Characteristics:
+
+Multivariate time-series sensor data
+
+Data collected from multiple turbofan engines
+
+Each engine operates until failure
+
+Sensors record temperature, pressure, vibration, and operational conditions
+
+Dataset Details:
+
+Total engines: 158
+
+Total records: 20,631
+
+Number of sensors: 21
+
+Each row represents one operational cycle of an engine
+
+The FD001 subset represents stable operating conditions, making it suitable for building and validating predictive maintenance models.
+
+3. Data Preprocessing
+
+Data preprocessing was performed to ensure data quality and reliability.
+
+Steps Performed:
+
+Assigned meaningful column names to raw data
+
+Corrected data parsing using whitespace separation
+
+Removed constant (non-informative) sensors
+
+Ensured correct data types for engine ID and cycle count
+
+Saved cleaned data for reproducibility
+
+Removing constant sensors reduced noise and improved model learning efficiency.
+
+4. Feature Engineering
+Remaining Useful Life (RUL)
+
+Remaining Useful Life (RUL) was calculated for each engine using:
+
+RUL = Maximum Cycle − Current Cycle
+
+Label Creation
+
+The regression problem was converted into a binary classification task:
+
+Failure (1): RUL ≤ 30 cycles
+
+Normal (0): RUL > 30 cycles
+
+This threshold-based approach reflects real-world maintenance decision-making, where failures must be detected in advance.
+
+5. Train–Test Splitting
+
+To avoid data leakage, the dataset was split engine-wise, not randomly.
+
+Why Engine-wise Split?
+
+Multiple records belong to the same engine
+
+Random splitting leaks future information
+
+Engine-wise splitting ensures realistic evaluation
+
+Data was split as:
+
+80% engines for training
+
+20% engines for testing
+
+6. Model Development
+
+Two machine learning models were implemented and evaluated.
+
+6.1 Logistic Regression (Baseline Model)
+
+Used as a baseline classifier
+
+Feature scaling applied
+
+Class imbalance handled using class weights
+
+Provided a benchmark for comparison
+
+6.2 Random Forest Classifier (Final Model)
+
+Captures non-linear sensor degradation patterns
+
+Robust to noise and feature interactions
+
+Handles imbalanced data effectively
+
+Widely used in industrial predictive maintenance systems
+
+7. Model Evaluation
+Evaluation Metrics:
+
+Precision
+
+Recall (priority metric)
+
+F1-score
+
+ROC-AUC
+
+Recall was prioritized because missing a failure is more costly than generating a false alarm.
+
+Results Summary:
+
+Logistic Regression provided moderate performance
+
+Random Forest significantly outperformed the baseline
+
+Random Forest achieved very high recall and ROC-AUC on FD001 data
+
+8. Threshold Tuning
+
+The default classification threshold (0.5) was adjusted to improve recall.
+
+Why Threshold Tuning?
+
+Lower thresholds detect failures earlier
+
+In predictive maintenance, early detection is critical
+
+Threshold tuning improved the system’s ability to detect potential failures at the cost of slightly increased false positives, which is acceptable in maintenance scenarios.
+
+9. Feature Importance Analysis
+
+Random Forest feature importance was analyzed to interpret model decisions.
+
+Observations:
+
+A small subset of sensors contributed most to failure prediction
+
+Cycle count and specific temperature/pressure sensors were dominant
+
+Results align with known turbofan engine degradation behavior
+
+This analysis enhances model transparency and trustworthiness.
+
+10. Conclusion
+
+This project successfully implemented an end-to-end predictive maintenance system using machine learning techniques. By leveraging sensor time-series data and Random Forest modeling, the system accurately detected imminent equipment failures.
+
+Key achievements include:
+
+Proper handling of time-series data
+
+Leakage-free model evaluation
+
+High recall-oriented predictive performance
+
+Interpretable and deployable ML solution
+
+The system demonstrates strong potential for real-world industrial maintenance applications.
+
+11. Future Scope
+
+Future enhancements may include:
+
+Testing on more complex datasets (FD002–FD004)
+
+Implementing deep learning models such as LSTM
+
+Real-time deployment using Django or Streamlit
+
+Integration with IoT sensor pipelines
+
+12. References
+
+NASA Prognostics Center of Excellence – C-MAPSS Dataset
+
+Scikit-learn Documentation
+
+Predictive Maintenance in Industry 4.0 Literature
